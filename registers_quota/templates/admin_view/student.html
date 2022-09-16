@@ -1,0 +1,55 @@
+{% extends 'admin_view/layout.html' %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2>ค้นหารายชื่อนักเรียน</h2>
+
+            <form action="{% url 'student' %}" method="post">
+                {% csrf_token %}
+                <h3>ชื่อนักเรียน</h3>
+                <div class="row g-2">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="search_username" placeholder="ชื่อนักเรียน" value="{{search_username}}">
+                    </div>
+                    <div class="col-auto">
+                        <input type="submit" class="btn btn-outline-primary mb-3" value="ค้นหา">
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive ">
+                <table class="table table-borderless">
+                    <thead class="table-info">
+                        <tr class="table">
+                            <th>รหัสประจำตัว</th>
+                            <th>ชื่อนักเรียน</th>
+                            <th>รายชื่อวิชาที่ลงทะเบียน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if students %}
+                            {% for student in students %}
+                                <tr>
+                                    <td>{{student.stu_id}}</td>
+                                    <td>{{student.stu_name}}</td>
+                                    <td>
+                                        <form action="{% url 'checkSub' %}" method="post">
+                                            {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-success" name="student" value="{{student.stu_id}}">รายชื่อวิชาที่ลง</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}          
+                            <td colspan="2">No Student</td>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

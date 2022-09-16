@@ -1,0 +1,49 @@
+{% extends 'reg/layout.html' %}
+{% block body %}
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2>ค้นหารายวิชา</h2>
+            <form action="{% url 'search' %}" method="post">
+                {% csrf_token %}
+                <div class="row g-2">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="search_keyword" value="{{search_keyword}}" placeholder="รหัสวิชา"">
+                    </div>
+                    <div class="col-auto">
+                        <input type="submit" class="btn btn-outline-primary mb-3" value="ค้นหา">
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-borderless">
+                    <thead class="table-info">
+                        <tr class="table">
+                            <th>รหัสวิชา</th>
+                            <th>ชื่อวิชา</th>
+                            <th>จำนวนที่นั่ง</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if subjects %}
+                            {% for subject in subjects %}
+                                <tr>
+                                    <td>{{subject.sub_id}}</td>
+                                    <td>{{subject.sub_name}}</td>
+                                    <td>{{subject.seat}}/{{subject.max_seat}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <td colspan="3">No Subject</td>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

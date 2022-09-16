@@ -1,0 +1,63 @@
+{% extends 'admin_view/layout.html' %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2>ค้นหารายวิชา</h2>
+
+            <form action="{% url 'admin_search' %}" method="post">
+                {% csrf_token %}
+                <h4>รหัสวิชา</h4>
+                <div class="row g-2">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="search_keyword" placeholder="รหัสวิชา" value="{{search_keyword}}">
+                    </div>
+                    <div class="col-auto">
+                        <input type="submit" class="btn btn-outline-primary mb-3" value="ค้นหา">
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-borderless">
+                    <thead class="table-info">
+                        <tr class="table">
+                            <th>รหัสวิชา</th>
+                            <th>ชื่อวิชา</th>
+                            <th>ภาคเรียน</th>
+                            <th>ปีการศึกษา</th>
+                            <th>จำนวนที่นั่ง</th>
+                            <th>รายชื่อนักเรียนที่ลงทะเบียน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if subjects %}
+                            {% for subject in subjects %}
+                                {% if search_keyword.upper in subject.sub_id %}
+                                    <tr>
+                                        <td>{{subject.sub_id}}</td>
+                                        <td>{{subject.sub_name}}</td>
+                                        <td>{{subject.sem}}</td>
+                                        <td>{{subject.year}}</td>
+                                        <td>{{subject.seat}}/{{subject.max_seat}}</td>
+                                        <td>
+                                            <form action="{% url 'checkStu' %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-success" name="subject" value="{{subject.sub_id}}">รายชื่อนักเรียน</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}          
+                            <td colspan="5">No Subject</td>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

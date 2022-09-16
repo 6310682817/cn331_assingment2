@@ -1,0 +1,168 @@
+{% extends 'reg/layout.html' %}
+{% block body %}
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2>ขอ/ถอนโควต้า</h2>
+            <form action="{% url 'quota' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" hidden></button>
+                <h2>รายวิชาที่ขอโควต้า</h2>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead class="table-info">
+                            <tr class="table">
+                                <th>รหัสวิชา</th>
+                                <th>ชื่อวิชา</th>
+                                <th>จำนวนที่นั่ง</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if complete_apply%}
+                                {% for apply in complete_apply %}
+                                    <tr>
+                                        <td>{{apply.subject.sub_id}}</td>
+                                        <td>{{apply.subject.sub_name}}</td>
+                                        <td>{{apply.subject.seat}}/{{apply.subject.max_seat}}</td>
+                                        <td><button type="submit" class="btn btn-danger" name="withdraw" value="{{apply.subject.sub_id}}">ถอนโควต้า</button></td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <td colspan="4">No Subject</td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>สถานะ</h2>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead class="table-info">
+                            <tr class="table">
+                                <th>รหัสวิชา</th>
+                                <th>ชื่อวิชา</th>
+                                <th>จำนวนที่นั่ง</th>
+                                <th>สถานะ</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if add_apply or withdraw_apply%}
+                                {% for apply in add_apply %}
+                                    <tr class="table-success">
+                                        <td>{{apply.subject.sub_id}}</td>
+                                        <td>{{apply.subject.sub_name}}</td>
+                                        <td>{{apply.subject.seat}}/{{apply.subject.max_seat}}</td>
+                                        <td>ขอโควต้า</td>
+                                        <td><button type="submit" class="btn btn-outline-danger" name="cancel" value="{{apply.subject.sub_id}}">ยกเลิก</button></td>
+                                    </tr>
+                                {% endfor %}
+                                {% for apply in withdraw_apply %}
+                                    <tr class="table-danger">
+                                        <td>{{apply.subject.sub_id}}</td>
+                                        <td>{{apply.subject.sub_name}}</td>
+                                        <td>{{apply.subject.seat}}/{{apply.subject.max_seat}}</td>
+                                        <td>ถอนโควต้า</td>
+                                        <td><button type="submit" class="btn btn-outline-danger" name="cancel" value="{{apply.subject.sub_id}}">ยกเลิก</button></td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <td colspan="5">No Subject</td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <h2>ค้นหารายวิชา</h2>
+                <div class="row g-2">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="search_keyword" value="{{search_keyword}}" placeholder="รหัสวิชา"">
+                    </div>
+                    <div class="col-auto">
+                        <input type="submit" class="btn btn-outline-primary mb-3" value="ค้นหา">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead class="table-info">
+                            <tr class="table">
+                                <th>รหัสวิชา</th>
+                                <th>ชื่อวิชา</th>
+                                <th>จำนวนที่นั่ง</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if search_keyword %}
+                                {% for subject in subjects %}
+                                    {% if search_keyword.upper in subject.sub_id %}
+                                        {% if subject.sub_id in complete_list %}
+                                            <tr>
+                                                <td>{{ subject.sub_id }}</td>
+                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{subject.seat}}/{{subject.max_seat}}</td>
+                                                <td>ขอโควต้าเรียบร้อย</td>
+                                            </tr>
+                                        {% elif subject.sub_id in add_list or subject.sub_id in withdraw_list %}
+                                            <tr>
+                                                <td>{{ subject.sub_id }}</td>
+                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{subject.seat}}/{{subject.max_seat}}</td>
+                                                <td>กำลังดำเนินการ</td>
+                                            </tr>
+                                        {% elif subject.status == "N" %}
+                                            <tr>
+                                                <td>{{ subject.sub_id }}</td>
+                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{subject.seat}}/{{subject.max_seat}}</td>
+                                                <td class="table-warning">ที่นั่งเต็ม</td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td>{{ subject.sub_id }}</td>
+                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{subject.seat}}/{{subject.max_seat}}</td>
+                                                <td><button class="btn btn-primary" name="add" type="submit" value="{{subject.sub_id}}">ขอโควต้า</button></td>
+                                            </tr>
+                                        {% endif %} 
+                                    {% endif %} 
+                                {% endfor %}
+                            {% else %}
+                                <td colspan="4">No Subject</td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#submitbackdrop">
+                    ยืนยัน
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="submitbackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="submitbackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="submitbackdropLabel">ยืนยันการขอโควต้า</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            กรุณาตวรจสอบข้อมูลให้ถูกต้องก่อนยืนยัน
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" name="submit" value="submit">ยืนยัน</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

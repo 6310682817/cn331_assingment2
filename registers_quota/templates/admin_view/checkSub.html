@@ -1,0 +1,36 @@
+{% extends 'admin_view/layout.html' %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2>รายชื่อวิชาที่ลงของนักเรียน</h2>
+            <h3>{{student}}</h3>
+            <div class="table-responsive ">
+                <table class="table table-borderless">
+                    <thead class="table-info">
+                        <tr class="table">
+                            <th>รหัสวิชา</th>
+                            <th>ชื่อวิชา</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if list_subjects %}
+                            {% for subject in list_subjects %}     
+                            <tr>
+                                <td>{{subject.subject.sub_id}}</td>
+                                <td>{{subject.subject.sub_name}}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <td colspan="2">No Subject</td>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

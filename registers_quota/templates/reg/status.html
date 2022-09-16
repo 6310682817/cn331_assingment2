@@ -1,0 +1,42 @@
+{% extends 'reg/layout.html' %}
+{% block body %}
+
+
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2>วิชาที่ขอโควต้าสำเร็จ</h2>
+            <div class="table-responsive ">
+                <table class="table table-borderless">
+                    <thead class="table-info">
+                    <tr class="table">
+                        <th>รหัสวิชา</th>
+                        <th>ชื่อวิชา</th>
+                        <th>จำนวนที่นั่ง</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% if applys %}
+                            {% for apply in applys %}
+                                <tr>
+                                    <td>{{apply.subject.sub_id}}</td>
+                                    <td>{{apply.subject.sub_name}}</td>
+                                    <td>{{apply.subject.seat}}/{{apply.subject.max_seat}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <td colspan="3">No Subject</td>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+
+{% endblock %}

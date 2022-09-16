@@ -1,0 +1,39 @@
+
+{% extends 'admin_view/layout.html' %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2>รายชื่อนักเรียนที่เรียนวิชา</h2>
+            <h3>{{subject}}</h3>
+            <div class="table-responsive ">
+                <table class="table table-borderless">
+                    <thead class="table-info">
+                        <tr class="table">
+                            <th>รหัสประจำตัว</th>
+                            <th>ชื่อนักเรียน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if list_students %}
+                            {% for student in list_students %}    
+                                <tr>
+                                    <td>{{student.student.stu_id}}</td>
+                                    <td>{{student.student.stu_name}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <td colspan="2">No Student</td>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
