@@ -17,7 +17,7 @@ class AdminPage:
         search_subject = []
         if self.request.POST.get('search_keyword'):
             search_keyword = self.request.POST['search_keyword']
-        for subject in Subject.objects.all():
+        for subject in Subject.objects.filter(quota_status='Open'):
             if search_keyword.upper() in subject.sub_id.upper():
                 search_subject.append(subject)
         return render(self.request, 'admin_view/search.html', {
@@ -40,7 +40,7 @@ class AdminPage:
             student = Student.objects.get(pk=self.request.POST['student'])
             list_subjects = student.stu_apply.all()
         return render(self.request, "admin_view/checkSub.html", {
-            "subject": Subject.objects.all(),
+            "subject": Subject.objects.filter(quota_status='Open'),
             "student": student,
             "list_subjects": list_subjects,
         })
@@ -74,7 +74,7 @@ class StudentPage:
         search_subject = []
         if self.request.POST.get('search_keyword'):
             search_keyword = self.request.POST['search_keyword']
-        for subject in Subject.objects.all():
+        for subject in Subject.objects.filter(quota_status='Open'):
             if search_keyword.upper() in subject.sub_id:
                 search_subject.append(subject)
         return render(self.request, 'reg/search.html', {
@@ -92,6 +92,7 @@ class StudentPage:
     
     def quota(self):
         search_keyword = ""
+        search_subject = []
         applys = self.user.stu_apply.all()
 
         if self.request.POST.get('add'):
@@ -117,6 +118,9 @@ class StudentPage:
             
         if self.request.POST.get('search_keyword'):
             search_keyword = self.request.POST['search_keyword']
+            for subject in Subject.objects.filter(quota_status='Open'):
+                if search_keyword.upper() in subject.sub_id:
+                    search_subject.append(subject)
         
         if self.request.POST.get('submit'):
             check_submit = True
@@ -158,7 +162,7 @@ class StudentPage:
 
         return render(self.request, 'reg/quota.html', {
             "student": self.user,
-            "subjects": Subject.objects.all(),
+            "subjects": search_subject,
             "search_keyword": search_keyword,
             "applys": applys,
             "complete_apply": complete_apply,

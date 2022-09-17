@@ -5,7 +5,7 @@ from .models import Subject, Student, Apply
 
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ("sub_id", "sub_name", "sem", "year", "seat", "max_seat", "status")
+    list_display = ("sub_id", "sub_name", "sem", "year", "seat", "max_seat", "status", "quota_status")
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ("stu_id", "stu_name")

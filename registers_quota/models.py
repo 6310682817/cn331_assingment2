@@ -10,6 +10,7 @@ class Subject(models.Model):
     seat = models.IntegerField()
     max_seat = models.IntegerField()
     status = models.CharField(max_length=10,choices=[('Open','Y'), ('Close','N')],default='Open')
+    quota_status = models.CharField(max_length=10,choices=[('Open','Open'), ('Close','Close')],default='Open')
 
     def __str__(self):
         return f"{self.sub_id} {self.sub_name}"

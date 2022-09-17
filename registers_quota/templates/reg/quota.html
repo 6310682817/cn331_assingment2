@@ -96,7 +96,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% if search_keyword %}
+                            {% if search_keyword  %}
                                 {% for subject in subjects %}
                                     {% if search_keyword.upper in subject.sub_id %}
                                         {% if subject.sub_id in complete_list %}
@@ -128,7 +128,9 @@
                                                 <td><button class="btn btn-primary" name="add" type="submit" value="{{subject.sub_id}}">ขอโควต้า</button></td>
                                             </tr>
                                         {% endif %} 
-                                    {% endif %} 
+                                    {% endif %}
+                                {% empty %}
+                                    <td colspan="4">No Subject</td> 
                                 {% endfor %}
                             {% else %}
                                 <td colspan="4">No Subject</td>
