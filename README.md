@@ -11,4 +11,4 @@
   - สามารถขอและถอนโควต้า
   - สามารถดูวิชาที่ขอโควต้าสำเร็จ
 ---
-Link clip: <https://youtu.be/WtFZCse3CO0>
+Link clip: <https://youtu.be/l3hXlYqa2cg>
