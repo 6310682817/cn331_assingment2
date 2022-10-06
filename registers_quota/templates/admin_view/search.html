@@ -34,17 +34,17 @@
                     <tbody>
                         {% if subjects %}
                             {% for subject in subjects %}
-                                {% if search_keyword.upper in subject.sub_id %}
+                                {% if search_keyword.upper in subject.subject.sub_id.upper %}
                                     <tr>
-                                        <td>{{subject.sub_id}}</td>
-                                        <td>{{subject.sub_name}}</td>
+                                        <td>{{subject.subject.sub_id}}</td>
+                                        <td>{{subject.subject.sub_name}}</td>
                                         <td>{{subject.sem}}</td>
                                         <td>{{subject.year}}</td>
                                         <td>{{subject.seat}}/{{subject.max_seat}}</td>
                                         <td>
                                             <form action="{% url 'checkStu' %}" method="post">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-outline-success" name="subject" value="{{subject.sub_id}}">รายชื่อนักเรียน</button>
+                                                <button type="submit" class="btn btn-outline-success" name="subject" value="{{subject}}">รายชื่อนักเรียน</button>
                                             </form>
                                         </td>
                                     </tr>

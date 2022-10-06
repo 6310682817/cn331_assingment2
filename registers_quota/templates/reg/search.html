@@ -31,8 +31,8 @@
                         {% if subjects %}
                             {% for subject in subjects %}
                                 <tr>
-                                    <td>{{subject.sub_id}}</td>
-                                    <td>{{subject.sub_name}}</td>
+                                    <td>{{subject.subject.sub_id}}</td>
+                                    <td>{{subject.subject.sub_name}}</td>
                                     <td>{{subject.seat}}/{{subject.max_seat}}</td>
                                 </tr>
                             {% endfor %}

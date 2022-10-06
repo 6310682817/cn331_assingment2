@@ -22,14 +22,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% if complete_apply%}
+                            {% if complete_apply %}
                                 {% for apply in complete_apply %}
-                                    <tr>
-                                        <td>{{apply.subject.sub_id}}</td>
-                                        <td>{{apply.subject.sub_name}}</td>
-                                        <td>{{apply.subject.seat}}/{{apply.subject.max_seat}}</td>
-                                        <td><button type="submit" class="btn btn-danger" name="withdraw" value="{{apply.subject.sub_id}}">ถอนโควต้า</button></td>
-                                    </tr>
+                                    {% if apply.subject.sub_id in withdraw_list %}
+                                        <tr>
+                                            <td>{{apply.subject.sub_id}}</td>
+                                            <td>{{apply.subject.sub_name}}</td>
+                                            <td>{{apply.seat}}/{{apply.max_seat}}</td>
+                                            <td>กำลังดำเนินการ</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td>{{apply.subject.sub_id}}</td>
+                                            <td>{{apply.subject.sub_name}}</td>
+                                            <td>{{apply.seat}}/{{apply.max_seat}}</td>
+                                            <td><button type="submit" class="btn btn-danger" name="withdraw" value="{{apply}}">ถอนโควต้า</button></td>
+                                        </tr>
+                                    {% endif %}
                                 {% endfor %}
                             {% else %}
                                 <td colspan="4">No Subject</td>
@@ -54,20 +63,20 @@
                             {% if add_apply or withdraw_apply%}
                                 {% for apply in add_apply %}
                                     <tr class="table-success">
-                                        <td>{{apply.subject.sub_id}}</td>
-                                        <td>{{apply.subject.sub_name}}</td>
+                                        <td>{{apply.subject.subject.sub_id}}</td>
+                                        <td>{{apply.subject.subject.sub_name}}</td>
                                         <td>{{apply.subject.seat}}/{{apply.subject.max_seat}}</td>
                                         <td>ขอโควต้า</td>
-                                        <td><button type="submit" class="btn btn-outline-danger" name="cancel" value="{{apply.subject.sub_id}}">ยกเลิก</button></td>
+                                        <td><button type="submit" class="btn btn-outline-danger" name="cancel" value="{{apply.subject}}">ยกเลิก</button></td>
                                     </tr>
                                 {% endfor %}
                                 {% for apply in withdraw_apply %}
                                     <tr class="table-danger">
-                                        <td>{{apply.subject.sub_id}}</td>
-                                        <td>{{apply.subject.sub_name}}</td>
+                                        <td>{{apply.subject.subject.sub_id}}</td>
+                                        <td>{{apply.subject.subject.sub_name}}</td>
                                         <td>{{apply.subject.seat}}/{{apply.subject.max_seat}}</td>
                                         <td>ถอนโควต้า</td>
-                                        <td><button type="submit" class="btn btn-outline-danger" name="cancel" value="{{apply.subject.sub_id}}">ยกเลิก</button></td>
+                                        <td><button type="submit" class="btn btn-outline-danger" name="cancel" value="{{apply.subject}}">ยกเลิก</button></td>
                                     </tr>
                                 {% endfor %}
                             {% else %}
@@ -98,34 +107,34 @@
                         <tbody>
                             {% if search_keyword  %}
                                 {% for subject in subjects %}
-                                    {% if search_keyword.upper in subject.sub_id %}
-                                        {% if subject.sub_id in complete_list %}
+                                    {% if search_keyword.upper in subject.subject.sub_id.upper %}
+                                        {% if subject.subject.sub_id in complete_list %}
                                             <tr>
-                                                <td>{{ subject.sub_id }}</td>
-                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{ subject.subject.sub_id }}</td>
+                                                <td>{{ subject.subject.sub_name }}</td>
                                                 <td>{{subject.seat}}/{{subject.max_seat}}</td>
                                                 <td>ขอโควต้าเรียบร้อย</td>
                                             </tr>
-                                        {% elif subject.sub_id in add_list or subject.sub_id in withdraw_list %}
+                                        {% elif subject.subject.sub_id in add_list or subject.subject.sub_id in withdraw_list %}
                                             <tr>
-                                                <td>{{ subject.sub_id }}</td>
-                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{ subject.subject.sub_id }}</td>
+                                                <td>{{ subject.subject.sub_name }}</td>
                                                 <td>{{subject.seat}}/{{subject.max_seat}}</td>
                                                 <td>กำลังดำเนินการ</td>
                                             </tr>
                                         {% elif subject.status == "N" %}
                                             <tr>
-                                                <td>{{ subject.sub_id }}</td>
-                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{ subject.subject.sub_id }}</td>
+                                                <td>{{ subject.subject.sub_name }}</td>
                                                 <td>{{subject.seat}}/{{subject.max_seat}}</td>
                                                 <td class="table-warning">ที่นั่งเต็ม</td>
                                             </tr>
                                         {% else %}
                                             <tr>
-                                                <td>{{ subject.sub_id }}</td>
-                                                <td>{{ subject.sub_name }}</td>
+                                                <td>{{ subject.subject.sub_id }}</td>
+                                                <td>{{ subject.subject.sub_name }}</td>
                                                 <td>{{subject.seat}}/{{subject.max_seat}}</td>
-                                                <td><button class="btn btn-primary" name="add" type="submit" value="{{subject.sub_id}}">ขอโควต้า</button></td>
+                                                <td><button class="btn btn-primary" name="add" type="submit" value="{{subject}}">ขอโควต้า</button></td>
                                             </tr>
                                         {% endif %} 
                                     {% endif %}

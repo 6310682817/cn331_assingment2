@@ -28,7 +28,7 @@ def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        if str(request.user) == "admin":
+        if request.user.is_staff:
             return AdminPage(request).index()
         else:
             return StudentPage(request).index()
@@ -38,41 +38,62 @@ def admin_search(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        return AdminPage(request).search()
+        if request.user.is_staff:
+            return AdminPage(request).search()
+        else:
+            return HttpResponseRedirect(reverse('index'))
 
 def student(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        return AdminPage(request).student()
+        if request.user.is_staff:
+            return AdminPage(request).student()
+        else:
+            return HttpResponseRedirect(reverse('index'))
 
 def checkStu(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        return AdminPage(request).checkStu()
+        if request.user.is_staff:
+            return AdminPage(request).checkStu()
+        else:
+            return HttpResponseRedirect(reverse('index'))
 
 def checkSub(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        return AdminPage(request).checkSub()
+        if request.user.is_staff:
+            return AdminPage(request).checkSub()
+        else:
+            return HttpResponseRedirect(reverse('index'))
 
 # student page
 def search(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        return StudentPage(request).search()
+        if request.user.is_staff:
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return StudentPage(request).search()
 
 def status(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        return StudentPage(request).status()
+        if request.user.is_staff:
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return StudentPage(request).status()
 
 def quota(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
     else:
-        return StudentPage(request).quota()
+        if request.user.is_staff:
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return StudentPage(request).quota()
