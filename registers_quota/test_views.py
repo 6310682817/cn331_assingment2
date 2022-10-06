@@ -25,7 +25,8 @@ class QuotaViewTestCase(TestCase):
         """ index view's status code is ok """
 
         c = Client()
-        c.post(reverse('login'), {'username': "6310682809", 'password': "Reg1234."})
-        response = c.get(reverse('index'))
+        response = c.post(reverse('login'), {'username': "6310682809", 'password': "Reg1234."})
+        # response = c.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
+
     
