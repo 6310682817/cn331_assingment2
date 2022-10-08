@@ -44,3 +44,5 @@ class Apply(models.Model):
         return f"{self.student} {self.subject} {self.status}"
 
 
+
+
