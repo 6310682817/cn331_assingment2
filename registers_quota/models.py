@@ -40,8 +40,6 @@ class Apply(models.Model):
     status = models.CharField(max_length=64, choices=[('empty','empty'), ('add','add'), 
                                                              ('withdraw','withdraw')], default='empty')
 
-    def __str__(self):
-        return f"{self.student} {self.subject} {self.status}"
 
 
 
