@@ -108,7 +108,6 @@ class StudentPage:
             Apply.objects.create(student=self.user, subject=subject, status="add")
         
         if self.request.POST.get('withdraw'):
-            print(self.request.POST.get('withdraw'))
             subject_data = SubjectData.objects.get(pk=self.request.POST['withdraw'].split()[0])
             subject = Subject.objects.filter(subject=subject_data,
                                              sem=self.request.POST['withdraw'].split()[1],
