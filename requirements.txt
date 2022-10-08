@@ -1,8 +1,13 @@
 asgiref==3.5.2
+autopep8==1.7.0
+coverage==6.5.0
 dj-database-url==1.0.0
-Django==4.1.1
-gunicorn==20.1.0
-psycopg2==2.9.3
+Django==4.1
+django-heroku==0.3.1
+Pillow==9.2.0
+psycopg2==2.9.4
+pycodestyle==2.9.1
 sqlparse==0.4.2
+toml==0.10.2
 tzdata==2022.2
 whitenoise==6.2.0
