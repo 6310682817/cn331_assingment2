@@ -9,13 +9,6 @@ class SubjectDataAdmin(admin.ModelAdmin):
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ("subject", "sem", "year", "seat", "max_seat", "status", "quota_status")
 
-    @admin.action(description='Change status_enroll to true')
-    def change_status_true(Subject, request, queryset):
-        queryset.update(quota_status=True)
-
-    @admin.action(description='Change status_enroll to false')
-    def change_status_false(Subject, request, queryset):
-        queryset.update(quota_status=False)
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ("student",)
