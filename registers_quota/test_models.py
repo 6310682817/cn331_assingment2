@@ -36,7 +36,6 @@ class QuotaModelsTestCase(TestCase):
     def test_seat_not_available(self):
         """ is_seat__not_available should be False """
 
-
         subject = Subject.objects.first()
         student = Student.objects.first()
 
