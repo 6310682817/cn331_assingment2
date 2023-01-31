@@ -13,6 +13,4 @@
 ---
 <https://register-quota-cn331.herokuapp.com/>\
 Link clip: <https://youtu.be/l3hXlYqa2cg>
-```
-print('heelo')
-```
+
