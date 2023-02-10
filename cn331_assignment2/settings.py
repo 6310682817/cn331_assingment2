@@ -133,4 +133,5 @@ prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
 
 ALLOWED_HOSTS = ['register-quota-cn331.herokuapp.com',
-                 '127.0.0.1']
+                 '127.0.0.1',
+                 '143.198.85.94:8001']
