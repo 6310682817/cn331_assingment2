@@ -14,3 +14,5 @@
 <https://register-quota-cn331.herokuapp.com/>\
 Link clip: <https://youtu.be/l3hXlYqa2cg>
 
+เข้าไปทดสอบได้ที่นี่\
+http://143.198.85.94:8001/
